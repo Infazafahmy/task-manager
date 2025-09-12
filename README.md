@@ -83,27 +83,6 @@ npm run dev
 
 Access the application at: http://127.0.0.1:8000
 
-Objective
-
-
-
-Clone the repository:
-
-git clone <your-github-repo-url> C:\xampp\htdocs\task-manager
-cd C:\xampp\htdocs\task-manager
-
-
-Pull latest changes (if already cloned):
-
-git pull origin main
-
-
-Add new files / changes:
-
-git add .
-git commit -m "Added priority levels and comments feature, updated port to 3307"
-git push origin main
-
 
 Make sure .env is configured for port 3306:
 
@@ -112,7 +91,7 @@ DB_PORT=3306
 
 Run migrations and install dependencies as described above.
 
-Deliverables
+## Deliverables
 
 Updated Laravel project in GitHub repository
 
@@ -120,10 +99,11 @@ Clear commit history with feature-based commits
 
 Files added from GitHub, ready for local setup
 
-Author
+## Author
 
 Developed by: M.F.F. Infaza
 
 Date: 6th September 2025
 node -v
 npm -v
+
