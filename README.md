@@ -51,35 +51,51 @@ Example:
 
 C:\xampp\htdocs\task-manager
 
+#### 2. Create `.env` file
+- Copy `.env.example` and rename it to `.env`.  
+- Generate application key:  
 
-#### 2. Change MySQL port (if needed)
-This project uses port 3307. Update your .env file:
-
-DB_PORT=3307
+  php artisan key:generate
 
 
-#### 3. Start XAMPP services
+#### 3. Configure database in `.env` 
+Example configuration (change as needed):  
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=task_manager
+DB_USERNAME=root
+DB_PASSWORD=
+
+#### 4. Change MySQL port (if needed)
+This project uses port 3306. Update your .env file:
+
+DB_PORT=3306
+
+
+#### 5. Start XAMPP services
 
 Start Apache and MySQL in the XAMPP Control Panel.
 
 
 
-#### 4. Install PHP dependencies
+#### 6. Install PHP dependencies
 
 composer install
 
 
-#### 5. Install Node.js dependencies
+#### 7. Install Node.js dependencies
 
 npm install
 
 
-#### 6. Run migrations
+#### 8. Run migrations
 
 php artisan migrate
 
 
-#### 7. Run the application (open two terminals):
+#### 9. Run the application (open two terminals):
 
 ##### Terminal 1 – Start Laravel server
 
@@ -91,11 +107,11 @@ npm run dev
 
 
 
-#### 8. Access the application at:
+#### 10. Access the application at:
 http://127.0.0.1:8000
 
 
-#### 9. If using default MySQL port (3306)
+#### 11. If using default MySQL port (3306)
 Update .env:
 
 DB_PORT=3306
@@ -121,3 +137,4 @@ Developed by: M.F.F. Infaza
 Date: 6th September 2025
 
 ---
+
