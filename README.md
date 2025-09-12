@@ -2,7 +2,7 @@
 
 ## Overview  
 The Task Management System is a **Laravel 10** web application built with **Laravel Breeze** for authentication.  
-It allows users to create, update, delete, and manage tasks, with a dashboard to view tasks grouped by status (Pending, In Progress, Completed).  
+It allows users to create, update, delete, and manage tasks, with a dashboard to view tasks grouped by status (**Pending, In Progress, Completed**).  
 
 ---
 
@@ -11,6 +11,8 @@ It allows users to create, update, delete, and manage tasks, with a dashboard to
 - Add, edit, delete, and mark tasks as completed  
 - Assign tasks to other users  
 - Postpone tasks with reason and history log  
+- Introduce priority levels (High, Medium, Low)  
+- Comments on tasks in chronological order  
 - Dashboard grouped by task status  
 - Search and filter tasks  
 - SweetAlert confirmation popups  
@@ -29,7 +31,6 @@ Make sure the following are installed:
 
 Check versions with:  
 
-
 php -v
 
 php artisan --version
@@ -38,7 +39,7 @@ composer -v
 
 node -v
 
-npm -v. 
+npm -v
 
 
 ---
@@ -51,28 +52,34 @@ Example:
 C:\xampp\htdocs\task-manager
 
 
-#### 2. Start XAMPP services
+#### 2. Change MySQL port (if needed)
+This project uses port 3307. Update your .env file:
+
+DB_PORT=3307
+
+
+#### 3. Start XAMPP services
 
 Start Apache and MySQL in the XAMPP Control Panel.
 
 
 
-#### 3. Install PHP dependencies
+#### 4. Install PHP dependencies
 
 composer install
 
 
-#### 4. Install Node.js dependencies
+#### 5. Install Node.js dependencies
 
 npm install
 
 
-#### 5. Run migrations
+#### 6. Run migrations
 
 php artisan migrate
 
 
-#### 6. Run the application (open two terminals):
+#### 7. Run the application (open two terminals):
 
 ##### Terminal 1 – Start Laravel server
 
@@ -84,8 +91,26 @@ npm run dev
 
 
 
-#### 7. Access the application at:
+#### 8. Access the application at:
 http://127.0.0.1:8000
+
+
+#### 9. If using default MySQL port (3306)
+Update .env:
+
+DB_PORT=3306
+
+Then re-run migrations and install dependencies as described above.
+
+---
+
+## Deliverables
+
+Updated Laravel project in GitHub repository
+
+Clear commit history with feature-based commits
+
+Files added from GitHub, ready for local setup
 
 
 ---
@@ -95,6 +120,4 @@ http://127.0.0.1:8000
 Developed by: M.F.F. Infaza
 Date: 6th September 2025
 
-
-
-
+---
