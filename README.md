@@ -43,57 +43,58 @@ npm -v.
 
 ---
 
-2. Setup Steps
+### 2. Setup Steps
 
-1. Unzip or clone the project into C:\xampp\htdocs (Windows) or your web server root.
+#### 1. Unzip or clone the project into C:\xampp\htdocs (Windows) or your web server root.
 Example:
 
 C:\xampp\htdocs\task-manager
 
 
-2. Start XAMPP services
+#### 2. Start XAMPP services
 
 Start Apache and MySQL in the XAMPP Control Panel.
 
 
 
-3. Install PHP dependencies
+#### 3. Install PHP dependencies
 
 composer install
 
 
-4. Install Node.js dependencies
+#### 4. Install Node.js dependencies
 
 npm install
 
 
-5. Run migrations
+#### 5. Run migrations
 
 php artisan migrate
 
 
-6. Run the application (open two terminals):
+#### 6. Run the application (open two terminals):
 
-Terminal 1 – Start Laravel server
+##### Terminal 1 – Start Laravel server
 
 php artisan serve
 
-Terminal 2 – Compile frontend assets
+##### Terminal 2 – Compile frontend assets
 
 npm run dev
 
 
 
-7. Access the application at:
+#### 7. Access the application at:
 http://127.0.0.1:8000
 
 
 ---
 
-Author
+## Author
 
 Developed by: M.F.F. Infaza
 Date: 6th September 2025
+
 
 
 
