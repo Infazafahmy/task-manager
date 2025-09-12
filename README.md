@@ -1,38 +1,33 @@
+# Task Management System  
 
-# ✅ Task Management System  
-
-A **Laravel 10** web application for managing tasks efficiently, built with **Laravel Breeze** for authentication and styled with **TailwindCSS**.  
-The system allows users to create, update, assign, postpone, and track tasks with priority levels, comments, and a responsive dashboard.  
-
----
-
-## 🚀 Features  
-
-- 🔑 **Authentication** (User registration & login with Laravel Breeze)  
-- 📝 **Task Management** (Add, edit, delete, mark as completed)  
-- 👥 **Assign Tasks** to other users  
-- ⏳ **Postpone Tasks** with reason & history log  
-- 🎯 **Priority Levels** (High, Medium, Low)  
-- 💬 **Task Comments** in chronological order  
-- 📊 **Dashboard** grouped by task status (Pending, In Progress, Completed)  
-- 🔍 **Search & Filter** tasks  
-- ⚡ **SweetAlert** confirmation popups  
-- 📱 **Responsive UI** with TailwindCSS  
+## Overview  
+The Task Management System is a **Laravel 10** web application built with **Laravel Breeze** for authentication.  
+It allows users to create, update, delete, and manage tasks, with a dashboard to view tasks grouped by status (Pending, In Progress, Completed).  
 
 ---
 
-## 🛠️ Installation Instructions  
+## Features  
+- User registration and login (Laravel Breeze)  
+- Add, edit, delete, and mark tasks as completed  
+- Assign tasks to other users  
+- Postpone tasks with reason and history log  
+- Dashboard grouped by task status  
+- Search and filter tasks  
+- SweetAlert confirmation popups  
+- Responsive UI with TailwindCSS  
 
-### 1️⃣ Requirements  
+---
 
-Ensure the following are installed:  
+## Installation Instructions  
 
-- [XAMPP](https://www.apachefriends.org/) (PHP **8.1+** & MySQL **8.x**)  
-- [Laravel 10.x](https://laravel.com/docs/10.x)  
-- [Composer 2.x](https://getcomposer.org/)  
-- [Node.js (v18+)](https://nodejs.org/) & **NPM (v9+)**  
+### 1. Requirements  
+Make sure the following are installed:  
+- XAMPP (PHP 8.1+ and MySQL 8.x)  
+- Laravel 10.x (PHP framework)  
+- Composer 2.x  
+- Node.js (v18+) and NPM (v9+)  
 
-Check versions:  
+Check versions with:  
 
 ```bash
 php -v
@@ -44,43 +39,36 @@ npm -v
 
 ---
 
-2️⃣ Setup Steps
+2. Setup Steps
 
-1. Clone or unzip the project into your web server root:
+1. Unzip or clone the project into C:\xampp\htdocs (Windows) or your web server root.
+Example:
 
 C:\xampp\htdocs\task-manager
 
 
-2. Configure database
+2. Start XAMPP services
 
-Update your .env file:
-
-DB_PORT=3307   # If using custom port
+Start Apache and MySQL in the XAMPP Control Panel.
 
 
 
-3. Start XAMPP services
-
-Start Apache & MySQL from the XAMPP Control Panel.
-
-
-
-4. Install PHP dependencies
+3. Install PHP dependencies
 
 composer install
 
 
-5. Install Node.js dependencies
+4. Install Node.js dependencies
 
 npm install
 
 
-6. Run database migrations
+5. Run migrations
 
 php artisan migrate
 
 
-7. Run the application (open two terminals)
+6. Run the application (open two terminals):
 
 Terminal 1 – Start Laravel server
 
@@ -92,31 +80,14 @@ npm run dev
 
 
 
-8. Access the app
-
-👉 http://127.0.0.1:8000
-
-
+7. Access the application at:
+http://127.0.0.1:8000
 
 
 ---
 
-📦 Deliverables
-
-✅ Updated Laravel project in GitHub repository
-
-✅ Clear commit history with feature-based commits
-
-✅ Ready-to-run files for local setup
-
-
-
----
-
-👨‍💻 Author
+Author
 
 Developed by: M.F.F. Infaza
-📅 Date: 6th September 2025
+Date: 6th September 2025
 
-
----
