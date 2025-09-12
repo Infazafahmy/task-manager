@@ -29,12 +29,16 @@ Make sure the following are installed:
 
 Check versions with:  
 
-'''bash
+
 php -v
+
 php artisan --version
+
 composer -v
+
 node -v
-npm -v.  '''
+
+npm -v. 
 
 
 ---
@@ -90,5 +94,6 @@ Author
 
 Developed by: M.F.F. Infaza
 Date: 6th September 2025
+
 
 
