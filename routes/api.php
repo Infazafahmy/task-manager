@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\TaskApiController;
+use App\Http\Controllers\Api\CommentApiController;
+use App\Http\Controllers\Api\DashboardApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +17,28 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('/login', [AuthController::class, 'login'])->name('api.login');
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Core CRUD
+    Route::get('/tasks', [TaskApiController::class, 'index']);
+    Route::post('/tasks', [TaskApiController::class, 'store']);
+    Route::put('/tasks/{task}', [TaskApiController::class, 'update']);
+    Route::delete('/tasks/{task}', [TaskApiController::class, 'destroy']);
+    Route::post('/tasks/{task}/complete', [TaskApiController::class, 'markCompleted']);
+    
+    // Extra features
+    Route::post('/tasks/{task}/assign', [TaskApiController::class, 'assign']);
+    Route::post('/tasks/{task}/postpone', [TaskApiController::class, 'postpone']);
+
+    Route::post('/tasks/{task}/comments', [CommentApiController::class, 'store']);
+
+    Route::get('/dashboard', [DashboardApiController::class, 'index']);
+   
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

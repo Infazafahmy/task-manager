@@ -245,8 +245,8 @@
                                         <!-- Delete -->
                                         <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="delete-task-form">
                                             @csrf
-                                            @method('DELETE')flex items-center justify-center 
-                                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white rounded">Delete</button>
+                                            @method('DELETE')
+                                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white x-2 py-4 rounded">Delete</button>
                                         </form>
 
                                         <!-- Mark Completed -->
