@@ -16,7 +16,9 @@ It allows users to create, update, delete, and manage tasks, with a dashboard to
 - Dashboard grouped by task status  
 - Search and filter tasks  
 - SweetAlert confirmation popups  
-- Responsive UI with TailwindCSS  
+- Responsive UI with TailwindCSS
+- REST API for tasks, comments, assignment, and dashboard with Sanctum token authentication
+
 
 ---
 
@@ -51,14 +53,7 @@ Example:
 
 C:\xampp\htdocs\task-manager
 
-#### 2. Create `.env` file
-- Copy `.env.example` and rename it to `.env`.  
-- Generate application key:  
-
-  php artisan key:generate
-
-
-#### 3. Configure database in `.env` 
+#### 2. Configure database in `.env` 
 Example configuration (change as needed):  
 
 DB_CONNECTION=mysql
@@ -68,34 +63,34 @@ DB_DATABASE=task_manager
 DB_USERNAME=root
 DB_PASSWORD=
 
-#### 4. Change MySQL port (if needed)
+#### 3. Change MySQL port (if needed)
 This project uses port 3306. Update your .env file:
 
 DB_PORT=3306
 
 
-#### 5. Start XAMPP services
+#### 4. Start XAMPP services
 
 Start Apache and MySQL in the XAMPP Control Panel.
 
 
 
-#### 6. Install PHP dependencies
+#### 5. Install PHP dependencies
 
 composer install
 
 
-#### 7. Install Node.js dependencies
+#### 6. Install Node.js dependencies
 
 npm install
 
 
-#### 8. Run migrations
+#### 7. Run migrations
 
 php artisan migrate
 
 
-#### 9. Run the application (open two terminals):
+#### 8. Run the application (open two terminals):
 
 ##### Terminal 1 – Start Laravel server
 
@@ -107,16 +102,9 @@ npm run dev
 
 
 
-#### 10. Access the application at:
+#### 9. Access the application at:
 http://127.0.0.1:8000
 
-
-#### 11. If using default MySQL port (3306)
-Update .env:
-
-DB_PORT=3306
-
-Then re-run migrations and install dependencies as described above.
 
 ---
 
@@ -137,4 +125,5 @@ Developed by: M.F.F. Infaza
 Date: 6th September 2025
 
 ---
+
 
