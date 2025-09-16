@@ -114,29 +114,115 @@ class TaskApiController extends Controller
         ]);
     }
 
-    // 🔹 Assign users by email
-        public function assign(Request $request, Task $task)
+    // 🔹 Assign users by email 
+    public function assign(Request $request, Task $task)
     {
         $request->validate([
-            'assigned_emails' => 'required|string',
+            'emails' => 'required|string',
         ]);
 
-        // Split emails by comma
-        $emails = array_map('trim', explode(',', $request->assigned_emails));
+        $emails = array_map('trim', explode(',', $request->emails));
+
+        $invalidEmails = [];
+        $notRegistered = [];
+        $alreadyAssigned = [];
+        $assignedUsers = [];
 
         foreach ($emails as $email) {
+            // 1. Validate email format
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $invalidEmails[] = $email;
+                continue;
+            }
+
+            // 2. Check if user exists
             $user = User::where('email', $email)->first();
-            if ($user) {
-                $task->assignees()->syncWithoutDetaching($user->id);
+            if (!$user) {
+                $notRegistered[] = $email;
+                continue;
+            }
+
+            // 3. Check if already assigned
+            if ($task->assignees()->where('users.id', $user->id)->exists()) {
+                $alreadyAssigned[] = $email;
+                continue;
+            }
+
+            // 4. Assign user
+            $task->assignees()->syncWithoutDetaching($user->id);
+            $assignedUsers[] = $email;
+        }
+
+        $errors = [];
+
+        if ($invalidEmails) $errors['invalid_emails'] = $invalidEmails;
+        if ($notRegistered) $errors['not_registered'] = $notRegistered;
+        if ($alreadyAssigned) $errors['already_assigned'] = $alreadyAssigned;
+
+        // If any errors, return with 422
+        if ($errors) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Some emails could not be assigned.',
+                'errors'  => $errors,
+                'assigned_users' => $assignedUsers
+            ], 422);
+        }
+
+        // All good
+        return response()->json([
+            'success' => true,
+            'message' => 'Members assigned successfully.',
+            'assigned_users' => $assignedUsers,
+            'task' => $task->load('assignees')
+        ]);
+    }
+
+
+    // 🔹 Remove an assigned member by email 
+    public function removeAssignMember(Request $request, Task $task)
+    {
+        $request->validate([
+            'emails' => 'required|string', // comma-separated emails
+        ]);
+
+        $emails = array_map('trim', explode(',', $request->emails));
+        $removed = [];
+        $notAssigned = [];
+        $notFound = [];
+
+        foreach ($emails as $email) {
+            // Validate email format
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $notFound[] = $email;
+                continue;
+            }
+
+            // Find user by email
+            $user = User::where('email', $email)->first();
+            if (!$user) {
+                $notFound[] = $email;
+                continue;
+            }
+
+            // Check if assigned
+            if ($task->assignees()->where('users.id', $user->id)->exists()) {
+                $task->assignees()->detach($user->id);
+                $removed[] = $email;
+            } else {
+                $notAssigned[] = $email;
             }
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Members assigned successfully.',
-            'task'    => $task->load('assignees') // Include task with assigned users
+            'removed' => $removed,
+            'not_assigned' => $notAssigned,
+            'not_found' => $notFound,
+            'task' => $task->load('assignees')
         ]);
     }
+
 
 
     // 🔹 Postpone task

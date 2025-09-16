@@ -132,6 +132,16 @@
 
                 <div class="overflow-x-auto">
                     <table class="min-w-full border-collapse">
+                        @error('assigned_emails')
+                            <div id="error-alert" 
+                                class="flex items-center justify-between bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                                <span>{{ $message }}</span>
+                                <button onclick="document.getElementById('error-alert').remove()" 
+                                        class="text-red-700 font-bold text-lg ml-4">
+                                    &times;
+                                </button>
+                            </div>
+                        @enderror
                         <thead>
                             <tr class="bg-gray-200 text-left">
                                 <th class="p-3 border-b">Task</th>
@@ -170,7 +180,7 @@
                                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Add</button>
                                     </form>
                                 </td>
-                            </tr>
+                            </tr>                           
                             @endforeach
                         </tbody>
                     </table>

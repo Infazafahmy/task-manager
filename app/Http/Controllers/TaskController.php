@@ -5,40 +5,41 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
-    
+    // 🔹 List tasks (with filters)
     public function index(Request $request)
-{
-    $userId = auth()->id();
+    {
+        $userId = auth()->id();
 
-    $tasks = Task::with(['creator', 'assignees'])
-        ->where(function ($query) use ($userId) {
-            $query->where('user_id', $userId) // tasks created by me
-                  ->orWhereHas('assignees', function ($q) use ($userId) {
-                      $q->where('users.id', $userId); // tasks assigned to me
-                  });
-        })
-        ->when($request->filled('search'), function ($query) use ($request) {
-            $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', "%{$request->search}%")
-                  ->orWhere('description', 'like', "%{$request->search}%");
-            });
-        })
-        ->when($request->filled('status'), function ($query) use ($request) {
-            $query->where('status', $request->status);
-        })
-        ->when(request('priority'), function($query) {
-            $query->where('priority', request('priority'));
-        })
-        ->orderBy('due_date', 'asc')
-        ->paginate(10);
+        $tasks = Task::with(['creator', 'assignees'])
+            ->where(function ($query) use ($userId) {
+                $query->where('user_id', $userId) // tasks created by me
+                    ->orWhereHas('assignees', function ($q) use ($userId) {
+                        $q->where('users.id', $userId); // tasks assigned to me
+                    });
+            })
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('title', 'like', "%{$request->search}%")
+                    ->orWhere('description', 'like', "%{$request->search}%");
+                });
+            })
+            ->when($request->filled('status'), function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->when(request('priority'), function($query) {
+                $query->where('priority', request('priority'));
+            })
+            ->orderBy('due_date', 'asc')
+            ->paginate(10);
 
-    return view('tasks.index', compact('tasks'));
-}
+        return view('tasks.index', compact('tasks'));
+    }
 
-
+    // 🔹 Create task
     public function create()
     {
         return view('tasks.create');
@@ -57,6 +58,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('message','Task created successfully.');
     }
 
+    // 🔹 Update task
     public function edit(Task $task)
     {
         return view('tasks.edit', compact('task'));
@@ -77,7 +79,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('message', 'Task updated successfully!');
     }
 
-    // Delete
+    // 🔹 Delete task
     public function destroy(Task $task)
     {
         $task->delete();
@@ -89,6 +91,7 @@ class TaskController extends Controller
         return redirect()->back()->with('message', 'Task deleted successfully');
     }
 
+    // 🔹 Mark completed
     public function markCompleted(Task $task)
     {
         $task->status = 'completed';
@@ -115,28 +118,57 @@ class TaskController extends Controller
         return view('tasks.assign', compact('tasks'));
     }
 
-
+    // 🔹 Assign users by email
     public function assign(Request $request, Task $task)
     {
         $request->validate([
             'assigned_emails' => 'required|string',
         ]);
 
-        // Split emails by comma
         $emails = array_map('trim', explode(',', $request->assigned_emails));
 
-        foreach ($emails as $email) {
-            $user = User::where('email', $email)->first();
-            if ($user) {
-                // Avoid duplicate assignments
-                $task->assignees()->syncWithoutDetaching($user->id);
+        $invalidEmails = [];
+        $notRegistered = [];
+        $assignedUsers = [];
+
+        foreach ($emails as $email) 
+        {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $invalidEmails[] = $email;
+                continue;
             }
+
+            $user = User::where('email', $email)->first();
+            if (!$user) {
+                $notRegistered[] = $email;
+                continue;
+            }
+
+            $task->assignees()->syncWithoutDetaching($user->id);
+            $assignedUsers[] = $email;
         }
 
-        return redirect()->back()->with('message', 'Members assigned successfully.');
+        if ($invalidEmails || $notRegistered) {
+            $messages = [];
+
+            if ($invalidEmails) {
+                $messages[] = 'Invalid emails: ' . implode(', ', $invalidEmails);
+            }
+            if ($notRegistered) {
+                $messages[] = 'Not registered: ' . implode(', ', $notRegistered);
+            }
+
+            // ✅ Use Validator to return proper error messages
+            return redirect()->back()->withErrors([
+                'assigned_emails' => implode(' | ', $messages),
+            ])->withInput();
+        }
+
+        return redirect()->back()->with('message', 'Members assigned: ' . implode(', ', $assignedUsers));
     }
 
 
+    // 🔹 Remove an assigned member 
     public function removeMember(Task $task, User $user)
     {
         if ($task->user_id !== auth()->id()) abort(403);
@@ -146,6 +178,7 @@ class TaskController extends Controller
         return back()->with('message', 'Member removed successfully!');
     }
 
+    // 🔹 Postpone task    
     public function postpone(Request $request, Task $task)
     {
         $request->validate([
