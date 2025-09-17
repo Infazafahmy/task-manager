@@ -37,6 +37,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tasks/{task}/comments', [CommentApiController::class, 'store']);
 
     Route::get('/dashboard', [DashboardApiController::class, 'index']);
+    Route::get('/dashboard', [DashboardApiController::class, 'index']);
+
+    
    
     Route::post('/logout', [AuthController::class, 'logout']);
 });

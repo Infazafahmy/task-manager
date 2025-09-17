@@ -6,6 +6,8 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\Api\DashboardApiController;
+
 
 
 /*
@@ -51,3 +53,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::middleware('auth')->get('/dashboard-data', [DashboardApiController::class, 'index']);
+
+Route::get('/dashboard-frontend', function () {
+    return view('dashboard-frontend'); 
+})->middleware('auth');
