@@ -18,7 +18,8 @@ It allows users to create, update, delete, and manage tasks, with a dashboard to
 - SweetAlert confirmation popups  
 - Responsive UI with TailwindCSS
 - REST API for tasks, comments, assignment, and dashboard with Sanctum token authentication
-
+- API filtering, sorting, and pagination for tasks
+- Error handling for task assignment and completion
 
 ---
 
@@ -125,5 +126,6 @@ Developed by: M.F.F. Infaza
 Date: 6th September 2025
 
 ---
+
 
 
