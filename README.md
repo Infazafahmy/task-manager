@@ -20,7 +20,10 @@ It allows users to create, update, delete, and manage tasks, with a dashboard to
 - REST API for tasks, comments, assignment, and dashboard with Sanctum token authentication
 - API filtering, sorting, and pagination for tasks
 - Error handling for task assignment and completion
-
+- Interactive Dashboard:
+      Displays total tasks, Pending, In Progress, Completed counts
+      Highlights high-priority tasks due soon
+      Includes charts (Doughnut for task status, Bar for priority counts)
 ---
 
 ## Installation Instructions  
@@ -101,11 +104,23 @@ php artisan serve
 
 npm run dev
 
-
-
 #### 9. Access the application at:
 http://127.0.0.1:8000
 
+#### 10. New Frontend Dashboard:
+Access at:
+http://127.0.0.1:8000/dashboard-frontend
+
+
+It shows:
+
+Total tasks
+
+Pending, In Progress, Completed counts
+
+High-priority tasks due soon
+
+Interactive charts (status & priority)
 
 ---
 
@@ -126,6 +141,7 @@ Developed by: M.F.F. Infaza
 Date: 6th September 2025
 
 ---
+
 
 
 
