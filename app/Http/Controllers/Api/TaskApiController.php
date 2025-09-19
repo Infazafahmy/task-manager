@@ -14,13 +14,14 @@ class TaskApiController extends Controller
     {
         $userId = $request->user()->id;
 
-        $tasks = Task::with(['creator', 'assignees'])
+        $tasks = Task::with(['creator', 'postpones.user', 'comments.user', 'assignees'])
             ->where(function ($query) use ($userId) {
                 $query->where('user_id', $userId) // tasks created by me
-                      ->orWhereHas('assignees', function ($q) use ($userId) {
-                          $q->where('users.id', $userId); // tasks assigned to me
-                      });
+                    ->orWhereHas('assignees', function ($q) use ($userId) {
+                        $q->where('users.id', $userId); // tasks assigned to me
+                    });
             })
+         
             ->when($request->filled('search'), function ($query) use ($request) {
                 $query->where(function ($q) use ($request) {
                     $q->where('title', 'like', "%{$request->search}%")

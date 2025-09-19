@@ -198,7 +198,7 @@ class TaskController extends Controller
             'due_date' => $request->new_due_date,
         ]);
 
-        return redirect()->back()->with('success', 'Task postponed successfully.');
+        return redirect()->back()->with('message', 'Task postponed successfully.');
     }
 
 

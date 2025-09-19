@@ -35,15 +35,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tasks/{task}/postpone', [TaskApiController::class, 'postpone']);
 
     Route::post('/tasks/{task}/comments', [CommentApiController::class, 'store']);
-
-    Route::get('/dashboard', [DashboardApiController::class, 'index']);
-    Route::get('/dashboard', [DashboardApiController::class, 'index']);
-
-    
    
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/dashboard-data', [DashboardApiController::class, 'index']);
+
+Route::middleware(['auth:sanctum', 'auth'])->get('/user', function (Request $request) {
     return $request->user();
 });

@@ -49,13 +49,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/tasks/{task}/postpone', [TaskController::class, 'postpone'])->name('tasks.postpone');
     Route::post('/tasks/{task}/comments', [CommentController::class, 'store'])->name('comments.store');
 
-
 });
 
 require __DIR__.'/auth.php';
 
-Route::middleware('auth')->get('/dashboard-data', [DashboardApiController::class, 'index']);
 
 Route::get('/dashboard-frontend', function () {
     return view('dashboard-frontend'); 
 })->middleware('auth');
+

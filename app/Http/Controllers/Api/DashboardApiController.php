@@ -13,7 +13,7 @@ class DashboardApiController extends Controller
         $userId = $request->user()->id;
 
         // Fetch paginated tasks for the user
-        $tasks = Task::with(['creator', 'assignees'])
+        $tasks = Task::with(['creator', 'postpones.user', 'comments.user', 'assignees'])
             ->where(function ($query) use ($userId) {
                 $query->where('user_id', $userId)
                       ->orWhereHas('assignees', fn($q) => $q->where('users.id', $userId));
