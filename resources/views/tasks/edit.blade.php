@@ -55,15 +55,6 @@
                     <span x-show="open" class="truncate" >Dashboard</span>
                 </a>
 
-                <!-- Frontend Dashboard -->
-                <a href="{{ url('/dashboard-frontend') }}" 
-                class="flex items-center w-full px-4 py-2 rounded-lg transition {{ request()->is('dashboard-frontend') ? 'bg-blue-700 font-semibold' : 'hover:bg-blue-700' }}"
-                :class="!open && 'justify-center'">
-                    <i class="fa-solid fa-tachometer-alt text-xl"></i>
-                    <span x-show="open" class="mx-2 text-gray-400">|</span>
-                    <span x-show="open" class="truncate">Frontend Dashboard</span>
-                </a>
-
                 <!-- My Tasks -->
                 <a href="{{ route('tasks.index') }}" 
                    class="flex items-center w-full px-4 py-2 rounded-lg transition

@@ -27,7 +27,7 @@
         <div>
             <x-input-label for="email" :value="__('Email')" class="text-black font-semibold text-lg" />
             <x-text-input id="email"
-                          class="block mt-1 w-full rounded-lg border border-gray-400 bg-white/80 
+                          class="block mt-1 w-full rounded-lg  p-2 border border-gray-400 bg-white/80 
                                  text-lg placeholder:text-gray-500 
                                  focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                           type="email"
@@ -42,7 +42,7 @@
         <div>
             <x-input-label for="password" :value="__('Password')" class="text-black font-semibold text-lg" />
             <x-text-input id="password"
-                          class="block mt-1 w-full rounded-lg border border-gray-400 bg-white/80 
+                          class="block mt-1 w-full rounded-lg  p-2  border border-gray-400 bg-white/80 
                                  text-lg placeholder:text-gray-500 
                                  focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                           type="password"

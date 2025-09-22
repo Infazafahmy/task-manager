@@ -7,14 +7,14 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-6 text-lg text-gray-900 text-center" :status="session('status')" />
 
-    <form method="POST" action="{{ route('register') }}" class="space-y-6">
+    <form method="POST" action="{{ route('register') }}" class="space-y-4 sm:space-y-6">
         @csrf
 
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" class="text-black font-semibold text-lg" />
             <x-text-input id="name"
-                          class="block mt-1 w-full rounded-lg border border-gray-400 bg-white/80 
+                          class="block mt-1 w-full rounded-lg border p-2 border-gray-400 bg-white/80 
                                  text-lg placeholder:text-gray-500 
                                  focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                           type="text"
@@ -31,7 +31,7 @@
         <div>
             <x-input-label for="email" :value="__('Email')" class="text-black font-semibold text-lg" />
             <x-text-input id="email"
-                          class="block mt-1 w-full rounded-lg border border-gray-400 bg-white/80 
+                          class="block mt-1 w-full rounded-lg  p-2 border border-gray-400 bg-white/80 
                                  text-lg placeholder:text-gray-500 
                                  focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                           type="email"
@@ -47,7 +47,7 @@
         <div>
             <x-input-label for="password" :value="__('Password')" class="text-black font-semibold text-lg" />
             <x-text-input id="password"
-                          class="block mt-1 w-full rounded-lg border border-gray-400 bg-white/80 
+                          class="block mt-1 w-full rounded-lg  p-2 border border-gray-400 bg-white/80 
                                  text-lg placeholder:text-gray-500 
                                  focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                           type="password"
@@ -62,7 +62,7 @@
         <div>
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="text-black font-semibold text-lg" />
             <x-text-input id="password_confirmation"
-                          class="block mt-1 w-full rounded-lg border border-gray-400 bg-white/80 
+                          class="block mt-1 w-full rounded-lg  p-2 border border-gray-400 bg-white/80 
                                  text-lg placeholder:text-gray-500 
                                  focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                           type="password"

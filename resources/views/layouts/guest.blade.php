@@ -18,7 +18,7 @@
             <x-header />
 
             <!-- Centered Auth Card -->
-            <main class="flex-grow flex justify-center items-center px-4">
+            <main class="flex-grow flex justify-center items-center px-4 mt-10">
                 <div class="w-full sm:max-w-md px-6 py-9 backdrop-blur-md bg-white/90 shadow-xl rounded-2xl border border-white/10">
                     {{ $slot }}
                 </div>

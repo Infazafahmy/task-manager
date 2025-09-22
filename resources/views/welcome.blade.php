@@ -23,10 +23,6 @@
                             class="px-3 py-2 rounded-lg transition-colors {{ request()->is('dashboard') ? 'bg-blue-700' : 'hover:bg-blue-600' }}">
                                 Dashboard
                             </a>
-                            <a href="{{ url('/dashboard-frontend') }}" 
-                            class="px-3 py-2 rounded-lg transition-colors {{ request()->is('dashboard-frontend') ? 'bg-blue-700' : 'hover:bg-blue-600' }}">
-                                Frontend Dashboard
-                            </a>
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf
                                 <button type="submit" class="px-3 py-2 rounded-lg hover:bg-blue-600">
