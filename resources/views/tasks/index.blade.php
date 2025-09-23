@@ -54,7 +54,6 @@
                     <span x-show="open" class="mx-2 text-gray-400">|</span>
                     <span x-show="open" class="truncate" >Dashboard</span>
                 </a>
-
                 <!-- My Tasks -->
                 <a href="{{ route('tasks.index') }}" 
                    class="flex items-center w-full px-4 py-2 rounded-lg transition
@@ -93,7 +92,7 @@
 
             <!-- Header -->
             <div class="bg-blue-800 text-white shadow rounded-lg p-4 mb-6 flex justify-between items-center">
-                <h2 class="text-xl font-semibold">Dashboard</h2>
+                <h2 class="text-xl font-semibold">My Tasks</h2>
 
                 <!-- Breeze Dropdown -->
                 <div class="relative" x-data="{ open: false }">
@@ -125,48 +124,49 @@
                         </form>
                     </div>
                 </div>
+            </div>   
+        
+            <!-- Card Heading -->
+
+            <div class="bg-white/70 p-6 rounded-2xl shadow space-y-4 mb-6">
+                <h2 class="text-2xl font-bold mb-2 px-4 py-2 rounded text-blue-800 w-fit">
+                    Add Task
+                </h2>
+
+                <!-- Add Task Form -->
+                <form method="POST" action="{{ route('tasks.store') }}" class="space-y-3">
+                    @csrf
+                    <div class="grid md:grid-cols-4 gap-3">
+                        <input name="title" class="border rounded-lg p-2" placeholder="Title" required>
+                        <input name="due_date" type="date" class="border rounded-lg p-2" min="{{ now()->toDateString() }}" required>
+                        <select name="status" class="border rounded-lg p-2">
+                            <option value="pending">Pending</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <!-- Priority -->
+                        <select name="priority" class="border rounded-lg p-2">
+                            <option value="high">High</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    
+                    <textarea name="description" class="border rounded-lg p-2 w-full" rows="2" placeholder="Description (optional)"></textarea>
+                    <!-- Submit Button -->
+                    <button class="w-full rounded-xl px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition">
+                        Add Task
+                    </button>
+                </form>
             </div>
 
-            <!-- Priority Stats -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                <div class="bg-red-500 hover:bg-red-600 text-white p-6 rounded-xl shadow-lg transition">
-                    <h3 class="text-lg font-semibold mb-2">High Priority</h3>
-                    <p class="text-3xl font-bold">{{ $highPriorityCount }}</p>
-                </div>
-                <div class="bg-yellow-500 hover:bg-yellow-600 text-white p-6 rounded-xl shadow-lg transition">
-                    <h3 class="text-lg font-semibold mb-2">Medium Priority</h3>
-                    <p class="text-3xl font-bold">{{ $mediumPriorityCount }}</p>
-                </div>
-                <div class="bg-green-500 hover:bg-green-600 text-white p-6 rounded-xl shadow-lg transition">
-                    <h3 class="text-lg font-semibold mb-2">Low Priority</h3>
-                    <p class="text-3xl font-bold">{{ $lowPriorityCount }}</p>
-                </div>
-            </div>
-
-            
-   
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                <div class="bg-blue-500 hover:bg-blue-600 text-white p-6 rounded-xl shadow-lg transition">
-                    <h3 class="text-lg font-semibold mb-2">Pending</h3>
-                    <p class="text-3xl font-bold">{{ $pendingCount }}</p>
-                </div>
-                <div class="bg-purple-500 hover:bg-purple-600 text-white p-6 rounded-xl shadow-lg transition">
-                    <h3 class="text-lg font-semibold mb-2">In Progress</h3>
-                    <p class="text-3xl font-bold">{{ $inProgressCount }}</p>
-                </div>
-                <div class="bg-teal-500 hover:bg-teal-600 text-white p-6 rounded-xl shadow-lg transition">
-                    <h3 class="text-lg font-semibold mb-2">Completed</h3>
-                    <p class="text-3xl font-bold">{{ $completedCount }}</p>
-                </div>
-            </div>    
-    
             <div class="bg-white p-6 rounded-2xl shadow space-y-4">
-                <!-- Search Form Container -->
+                <!-- Heading + Search Form Container -->
                 <div class="flex items-center justify-between mb-4 bg-white p-4 rounded-lg shadow">
-                    <h2 class="text-2xl font-bold  px-4 py-2  text-blue-800 ">
+                    <h2 class="text-2xl font-bold px-4 py-2 text-blue-800 ">
                         My Tasks
                     </h2>
+
                     <!-- Search Form Right Aligned -->
                     <form method="GET" action="{{ route('dashboard') }}" class="flex gap-3 items-center">
                         <input type="text" 
@@ -182,6 +182,7 @@
                             <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
                             <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
                         </select>
+
                         <!-- Priority Filter -->
                         <select name="priority" class="border rounded-lg p-2 w-40">
                             <option value="" {{ request('priority') == '' ? 'selected' : '' }}>All Priority</option>
@@ -189,6 +190,7 @@
                             <option value="medium" {{ request('priority') == 'medium' ? 'selected' : '' }}>Medium</option>
                             <option value="low" {{ request('priority') == 'low' ? 'selected' : '' }}>Low</option>
                         </select>
+
                         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 whitespace-nowrap">
                             Search
                         </button>
@@ -210,12 +212,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
                             @foreach($tasks as $task)
                             <tr class="hover:bg-gray-50">
                                 <td class="p-3 border-b">{{ $task->title }}</td>
                                 <td class="p-3 border-b">{{ $task->description }}</td>
                                 <td class="p-3 border-b">{{ $task->due_date }}</td>
+                                
                                 <td class="p-3 border-b">
                                     <span class="px-2 py-1 rounded-full text-sm
                                         {{ $task->status == 'pending' ? 'bg-blue-100 text-blue-700' : ($task->status == 'in_progress' ? 'bg-purple-100 text-purple-700' : 'bg-teal-100 text-teal-700') }}">
@@ -238,26 +240,25 @@
                                 </td>
                                 <td class="p-3 border-b flex gap-2">
                                     @if($task->user_id === auth()->id())
-                                        <a href="{{ route('tasks.edit',$task) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center px-1 py-1 rounded">Edit</a>
+                                        <a href="{{ route('tasks.edit',$task) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center px-2 py-1 rounded">Edit</a>
                                         <!-- Delete -->
                                         <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="delete-task-form">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-4 rounded">Delete</button>
+                                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white x-2 py-4 rounded">Delete</button>
                                         </form>
 
                                         <!-- Mark Completed -->
-                                        @if($task->status !== 'completed')
+                                        @if($task->status !== 'completed') 
                                         <form action="{{ route('tasks.complete', $task) }}" method="POST" class="complete-task-form">
                                         @csrf @method('POST')
                                         <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded">
                                             Mark Completed
-                                        </button> 
+                                        </button>
                                         </form>
                                         @endif
                                     @endif
-
-                                        @if($task->status !== 'completed')
+                                         @if($task->status !== 'completed')
                                             <!-- Postpone button opens modal -->
                                             <button type="button" 
                                                     onclick="document.getElementById('postpone-{{ $task->id }}').classList.remove('hidden')" 
@@ -287,8 +288,8 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        
                                     
+
                                     <!-- View History Button -->
                                     <button type="button"
                                             onclick="document.getElementById('history-{{ $task->id }}').classList.remove('hidden')"
@@ -305,7 +306,13 @@
                                                 @forelse($task->postpones as $p)
                                                     <li class="mb-2">
                                                         {{ $p->created_at->format('d M Y H:i') }} – 
-                                                        <strong>{{ $p->user->name }}</strong> postponed to 
+                                                        <strong>
+                                                            @if($p->user_id === auth()->id())
+                                                                I am
+                                                            @else
+                                                                {{ $p->user->name }}
+                                                            @endif
+                                                        </strong> postponed to 
                                                         <span class="text-blue-600">{{ $p->new_due_date }}</span> 
                                                         (Reason: {{ $p->reason }})
                                                     </li>
@@ -321,7 +328,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Comments Button -->
                                     <button type="button"
                                             onclick="document.getElementById('comments-{{ $task->id }}').classList.remove('hidden')"
@@ -369,21 +375,17 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </td>
-                                
-                            </tr>                            
-                            @endforeach
-                            
-
+                            </tr>                           
+                            @endforeach                            
                         </tbody>
                     </table>
                     <div class="mt-4">
                         {{ $tasks->links() }}
                     </div>
                 </div>
-            </div>
 
+            </div>
         </main>
     </div>
 </x-app-layout>
@@ -420,7 +422,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#16a34a', // Tailwind green-600
                 cancelButtonColor: '#6b7280', // Tailwind gray-500
-                confirmButtonText: 'Yes, mark completed',
+                confirmButtonText: 'Yes, mark as completed',
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
