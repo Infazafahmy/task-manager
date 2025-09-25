@@ -19,6 +19,9 @@ The Backend Management Project is a Laravel 10 web application that manages task
 - Search and filter tasks
 - SweetAlert confirmation popups
 - Responsive UI with Blade and TailwindCSS
+- File attachments for tasks (PDF, images, docs)
+- Multiple attachments per task with download & delete functionality
+- File validation (max 5MB, pdf/doc/jpg/png)
 
 ---
 
@@ -55,7 +58,6 @@ The Backend Management Project is a Laravel 10 web application that manages task
 - Backend pages for task management, user assignment, and editing
 - Integration with the same database as frontend project
 - README.md with installation and setup instructions
-- Screenshots or demo of task management features
 
 ---
 
