@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         $userId = auth()->id();
 
-        $tasks = Task::with(['creator', 'assignees'])
+        $tasks = Task::with(['creator', 'assignees', 'attachments.user'])
             ->where(function ($query) use ($userId) {
                 $query->where('user_id', $userId) // tasks I created
                       ->orWhereHas('assignees', function ($q) use ($userId) {

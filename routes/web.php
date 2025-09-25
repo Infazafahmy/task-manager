@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Api\DashboardApiController;
+use App\Http\Controllers\AttachmentController;
 
 
 
@@ -48,7 +49,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/tasks/{task}/postpone', [TaskController::class, 'postpone'])->name('tasks.postpone');
     Route::post('/tasks/{task}/comments', [CommentController::class, 'store'])->name('comments.store');
-
+    Route::post('/tasks/{task}/attachments', [AttachmentController::class, 'store'])->name('attachments.store');
+    Route::get('/tasks/attachments/{attachment}', [AttachmentController::class, 'download'])->name('attachments.download');
+    Route::delete('/tasks/attachments/{attachment}', [AttachmentController::class, 'destroy'])->name('attachments.destroy');
 });
 
 require __DIR__.'/auth.php';
@@ -57,4 +60,5 @@ require __DIR__.'/auth.php';
 Route::get('/dashboard-frontend', function () {
     return view('dashboard-frontend'); 
 })->middleware('auth');
+
 

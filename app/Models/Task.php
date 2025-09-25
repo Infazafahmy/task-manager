@@ -43,6 +43,8 @@ class Task extends Model
         return $this->hasMany(Comment::class)->orderBy('created_at', 'asc'); // chronological
     }
 
-
+    public function attachments() {
+        return $this->hasMany(Attachment::class);
+    }
 
 }

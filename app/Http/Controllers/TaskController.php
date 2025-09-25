@@ -14,7 +14,7 @@ class TaskController extends Controller
     {
         $userId = auth()->id();
 
-        $tasks = Task::with(['creator', 'assignees'])
+        $tasks = Task::with(['creator', 'assignees','postpones.user', 'comments.user', 'attachments.user'])
             ->where(function ($query) use ($userId) {
                 $query->where('user_id', $userId) // tasks created by me
                     ->orWhereHas('assignees', function ($q) use ($userId) {

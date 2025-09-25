@@ -239,6 +239,69 @@
                                     </span>
                                 </td>
                                 <td class="p-3 border-b flex gap-2">
+                                    <!-- Attach Button -->
+                                    <button type="button"
+                                            onclick="document.getElementById('attach-{{ $task->id }}').classList.remove('hidden')"
+                                            class="bg-indigo-500 hover:bg-indigo-600 text-white px-2 py-1 rounded">
+                                        Attach
+                                    </button>
+
+                                    <!-- Attach Modal -->
+                                    <div id="attach-{{ $task->id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                        <div class="bg-white p-6 rounded-xl w-2/3 max-h-[80vh] flex flex-col">
+                                            <h2 class="text-lg font-bold mb-4">Attachments for: {{ $task->title }}</h2>
+
+                                            <!-- Uploaded Files List -->
+                                            <div class="flex-1 overflow-y-auto space-y-2 mb-4">
+                                                @forelse($task->attachments as $attachment)
+                                                    <div class="p-2 border rounded bg-gray-50 flex justify-between items-center">
+                                                        <div>
+                                                            <p class="text-sm text-gray-800">{{ $attachment->filename }} ({{ number_format($attachment->size / 1024, 2) }} KB)</p>
+                                                            <span class="text-xs text-gray-500">
+                                                                – Uploaded by {{ $attachment->user->name }} ({{ $attachment->created_at->diffForHumans() }})
+                                                            </span>
+                                                        </div>
+                                                        <div class="flex gap-2">
+                                                            <a href="{{ route('attachments.download', $attachment) }}"
+                                                            class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                                                                Download
+                                                            </a>
+                                                            @if($attachment->user_id === auth()->id())
+                                                            <form action="{{ route('attachments.destroy', $attachment) }}" method="POST" class="delete-attachment-form">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                                                    Delete
+                                                                </button>
+                                                            </form>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                @empty
+                                                    <p class="text-gray-500 text-sm">No files uploaded yet.</p>
+                                                @endforelse
+                                            </div>
+
+                                            <!-- Upload File Form -->
+                                            <form action="{{ route('attachments.store', $task) }}" method="POST" enctype="multipart/form-data" class="flex gap-2 mt-auto">
+                                                @csrf
+                                                <input type="file" name="file" class="border rounded-lg p-2 flex-1" required
+                                                    accept=".pdf,.doc,.docx,.jpg,.png">
+                                                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+                                                    Upload
+                                                </button>
+                                            </form>
+
+                                            <!-- Close Button -->
+                                            <div class="flex justify-end mt-2">
+                                                <button type="button"
+                                                        onclick="document.getElementById('attach-{{ $task->id }}').classList.add('hidden')"
+                                                        class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @if($task->user_id === auth()->id())
                                         <a href="{{ route('tasks.edit',$task) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center px-2 py-1 rounded">Edit</a>
                                         <!-- Delete -->
@@ -442,4 +505,47 @@
         confirmButtonText: 'OK'
     });
     @endif
+</script>
+<script>
+    // File upload confirmation
+    document.querySelectorAll('form[action*="/attachments"]').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Upload File?',
+                text: "Are you sure you want to upload this file?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#4f46e5', // Tailwind indigo-600
+                cancelButtonColor: '#6b7280', // Tailwind gray-500
+                confirmButtonText: 'Yes, upload it!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+
+    // File delete confirmation
+    document.querySelectorAll('.delete-attachment-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Delete File?',
+                text: "This file will be permanently deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e11d48',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
 </script>
